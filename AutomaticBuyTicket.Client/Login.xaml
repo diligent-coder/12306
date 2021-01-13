@@ -1,0 +1,40 @@
+﻿<Window x:Class="AutomaticBuyTicket.Login"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AutomaticBuyTicket"
+        mc:Ignorable="d"
+        Title="登录" Height="445" Width="475">
+    <TabControl x:Name="LoginContainer" SelectionChanged="LoginContainer_SelectionChanged">
+        <TabItem Header="扫码登陆" Height="20" VerticalAlignment="Top" Name="LoginByQRCode">
+            <Grid>
+                <Image Name="QRImg"></Image>
+            </Grid>
+        </TabItem>
+        <TabItem Header="账号登录" Name="LoginByPassword">
+            <Grid  Margin="10 30 10 30">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="100*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="150"/>
+                    <RowDefinition Height="25"/> 
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" TextAlignment="Right" Text="用户名：" />
+                <TextBox Name="UserName" Grid.Row="0" Grid.Column="1" Text="" />
+                <TextBlock Grid.Row="1" Grid.Column="0" TextAlignment="Right" Text="密码："/>
+                <PasswordBox Name="Password" Grid.Row="1" Grid.Column="1" />
+                <Image Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" x:Name="LoginImg"></Image>
+                <Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Height="23" Width="400" Content="立即登录" Click="btnConfirm_Click" 
+                        Name="btnConfirm" Background="Orange"/>
+                
+               
+            </Grid>
+        </TabItem>
+    </TabControl>
+
+</Window>
