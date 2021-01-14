@@ -5,12 +5,12 @@ using System.Linq;
 using System.Reflection;
 
 namespace AutomaticBuyTicket.Core.Http
-{
+{                    
     public class ContentTypeConfig
     {
         public readonly Dictionary<string, IHttpContentProccesser> ContentTypeAlgorithm;
 
-        private static ContentTypeConfig _contentTypeConfig;
+        private static readonly Lazy<ContentTypeConfig> lazy = new Lazy<ContentTypeConfig>(() => new ContentTypeConfig());
 
         private ContentTypeConfig()
         {
@@ -18,18 +18,13 @@ namespace AutomaticBuyTicket.Core.Http
                         .Where(t => t.GetInterfaces().Contains(typeof(IHttpContentProccesser)))
                         .ToDictionary(t => t.GetCustomAttribute<ContentAttribute>().ContentType
                             , t => (IHttpContentProccesser)Activator.CreateInstance(t));
-
         }
 
         public static ContentTypeConfig Instance
         {
             get
-            {
-                if (_contentTypeConfig == null)
-                {
-                    _contentTypeConfig = new ContentTypeConfig();
-                }
-                return _contentTypeConfig;
+            {              
+                return lazy.Value;
             }
         }
     }

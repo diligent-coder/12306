@@ -1,22 +1,24 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 
 namespace AutomaticBuyTicket.Core.Http
 {
     public class SiteConfig
     {
-        private static SiteConfig _siteConfig;
+        private SiteConfig()
+        {
 
-        public CookieContainer CookieContainer = new CookieContainer();
+        }
+
+        private static readonly Lazy<SiteConfig> lazy =new Lazy<SiteConfig>(() => new SiteConfig());
+
+        public readonly CookieContainer CookieContainer = new CookieContainer();
 
         public static SiteConfig Instance
         {
             get
-            {
-                if (_siteConfig == null)
-                {
-                    _siteConfig = new SiteConfig();
-                }
-                return _siteConfig;
+            {              
+                return lazy.Value;
             }
         }
     }
