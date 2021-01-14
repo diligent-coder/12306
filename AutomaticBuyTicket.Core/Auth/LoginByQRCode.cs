@@ -1,7 +1,6 @@
 ﻿using AutomaticBuyTicket.Core.Http;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace AutomaticBuyTicket.Core.Auth
@@ -40,8 +39,7 @@ namespace AutomaticBuyTicket.Core.Auth
                 Content = new List<KeyValuePair<string, string>>()
                 {
                     new KeyValuePair<string, string>("appid", "otn")
-                },
-                Cookies = PostMessageExtention.Cookies.ToList()
+                }
             };
 
             await postMessage.Post<CreateQRCodeResult>(result=>
@@ -69,8 +67,7 @@ namespace AutomaticBuyTicket.Core.Auth
                     new KeyValuePair<string, string>("uuid",QRCodeResult.uuid),
                     new KeyValuePair<string, string>("RAIL_DEVICEID",GetDeviceID()),
                     new KeyValuePair<string, string>("RAIL_EXPIRATION",GetExpiration()),
-                },
-                Cookies = PostMessageExtention.Cookies.ToList()
+                }
             };
 
             await postMessage.Post<CheckQRCodeResult>(result =>
@@ -102,8 +99,7 @@ namespace AutomaticBuyTicket.Core.Auth
                 Content = new List<KeyValuePair<string, string>>()
                 {
                     new KeyValuePair<string, string>("appid", "otn")
-                },
-                Cookies = PostMessageExtention.Cookies.ToList()
+                }
             };
             postMessage.CustomHeaders.Add("Referer", ConfigurationManager.AppSettings["Referer"]);
             postMessage.CustomHeaders.Add("Origin", ConfigurationManager.AppSettings["Origin"]);
@@ -130,8 +126,7 @@ namespace AutomaticBuyTicket.Core.Auth
                 Content = new List<KeyValuePair<string, string>>()
                 {
                     new KeyValuePair<string, string>("tk", AuthResult.newapptk)
-                },
-                Cookies = PostMessageExtention.Cookies.ToList()
+                }
             };
 
             await postMessage.Post<ClientAuthResult>( result =>

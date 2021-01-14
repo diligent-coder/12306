@@ -1,7 +1,6 @@
 ﻿using AutomaticBuyTicket.Core.Http.ContentTypeAlgorithms;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Net;
 using System.Net.Http;
 
 namespace AutomaticBuyTicket.Core.Http
@@ -27,8 +26,6 @@ namespace AutomaticBuyTicket.Core.Http
             httpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(ContentType);
             return httpContent;
         }
-
-        public List<Cookie> Cookies { get; set; }
        
     }
 

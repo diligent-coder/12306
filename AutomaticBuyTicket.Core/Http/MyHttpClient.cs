@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Net;
+﻿using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -15,14 +12,7 @@ namespace AutomaticBuyTicket.Core.Http
 
             using (HttpClientHandler handler = new HttpClientHandler())
             {
-                if (postMessage.Cookies != null)
-                {
-                    handler.CookieContainer = new CookieContainer();
-                    foreach (var cookie in postMessage.Cookies)
-                    {
-                        handler.CookieContainer.Add(cookie);
-                    }
-                }
+                handler.CookieContainer = SiteConfig.Instance.CookieContainer;
 
                 using (HttpClient httpClient = new HttpClient(handler))
                 {
@@ -37,26 +27,13 @@ namespace AutomaticBuyTicket.Core.Http
                             }
                         }
                     }
+
                     using (HttpContent content = postMessage.GetHttpContent())
                     {
                         var httpResponseMessage = await httpClient.PostAsync(postMessage.RequestUri, content);
 
                         result.Content = await httpResponseMessage.Content.ReadAsStringAsync();
-                        result.StausCode = httpResponseMessage.StatusCode;
-                        httpResponseMessage.Headers.TryGetValues("Set-Cookie", out var cookies);
-
-                        if (cookies != null)
-                        {
-                            List<Cookie> cookieList = new List<Cookie>();
-                            result.Cookies = cookieList;
-                            List<KeyValuePair<string, string>> keyValuePairs = new List<KeyValuePair<string, string>>();
-                            foreach (var cookie in cookies)
-                            {
-                                var cookieContents = cookie.Split(new[] { ';', '=' }, StringSplitOptions.RemoveEmptyEntries);
-                                cookieList.Add(new Cookie(cookieContents[0], cookieContents[1],"/"
-                                    ,ConfigurationManager.AppSettings["Domain"]));
-                            }
-                        }
+                        result.StausCode = httpResponseMessage.StatusCode;                        
 
                         return result;
                     }
@@ -66,10 +43,7 @@ namespace AutomaticBuyTicket.Core.Http
 
         public class MyHttpClientResult
         {
-            public IEnumerable<Cookie> Cookies { get; set; }
-
             public string Content { get; set; }
-
 
             public HttpStatusCode StausCode { get; set; }
         }
