@@ -26,9 +26,9 @@ namespace AutomaticBuyTicket
         /// </summary>
         public async void LoadQRCode()
         {
-            await Core.Auth.Login.GetQRCodeAsync();
+            await Core.Auth.LoginByQRCode.GetQRCodeAsync();
 
-            string imagebase64 = Core.Auth.Login.QRCodeResult.image;
+            string imagebase64 = Core.Auth.LoginByQRCode.QRCodeResult.image;
             byte[] streamBase = Convert.FromBase64String(imagebase64);
             BitmapImage bi = new BitmapImage();
             bi.BeginInit();
@@ -42,20 +42,20 @@ namespace AutomaticBuyTicket
 
         public async void CheckQRCode(object sender, EventArgs e)
         {
-            await Core.Auth.Login.CheckQRCodeAsync();
+            await Core.Auth.LoginByQRCode.CheckQRCodeAsync();
 
             //扫码登录成功
-            if (Core.Auth.Login.CheckQRCodeResult.result_code == "2")
+            if (Core.Auth.LoginByQRCode.CheckQRCodeResult.result_code == "2")
             {
                 ((DispatcherTimer)sender).Stop();
 
-                await Core.Auth.Login.AuthAsync();
-                await Core.Auth.Login.ClientAuthAsync();
+                await Core.Auth.LoginByQRCode.AuthAsync();
+                await Core.Auth.LoginByQRCode.ClientAuthAsync();
 
             }
 
             //二维码过期
-            if (Core.Auth.Login.CheckQRCodeResult.result_code == "3")
+            if (Core.Auth.LoginByQRCode.CheckQRCodeResult.result_code == "3")
             {
                 ((DispatcherTimer)sender).Stop();
                 LoadQRCode();

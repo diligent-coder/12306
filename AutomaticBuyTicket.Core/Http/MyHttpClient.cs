@@ -9,7 +9,6 @@ namespace AutomaticBuyTicket.Core.Http
 {
     public class MyHttpClient
     {
-
         public static async Task<MyHttpClientResult> PostAsync(PostMessage postMessage)
         {
             MyHttpClientResult result = new MyHttpClientResult();
@@ -45,7 +44,6 @@ namespace AutomaticBuyTicket.Core.Http
                         result.Content = await httpResponseMessage.Content.ReadAsStringAsync();
                         result.StausCode = httpResponseMessage.StatusCode;
                         httpResponseMessage.Headers.TryGetValues("Set-Cookie", out var cookies);
-
 
                         if (cookies != null)
                         {

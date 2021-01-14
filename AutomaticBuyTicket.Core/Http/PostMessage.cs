@@ -29,6 +29,7 @@ namespace AutomaticBuyTicket.Core.Http
         }
 
         public List<Cookie> Cookies { get; set; }
+       
     }
 
 }

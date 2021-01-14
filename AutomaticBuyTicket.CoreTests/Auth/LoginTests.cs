@@ -12,7 +12,7 @@ namespace AutomaticBuyTicket.Core.Auth.Tests
         [TestMethod()]
         public void GetQRCodeAsyncTest()
         {
-            var result=Login.GetQRCodeAsync();
+            var result=LoginByQRCode.GetQRCodeAsync();
         }
     }
 }
